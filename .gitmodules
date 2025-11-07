@@ -1,0 +1,75 @@
+[submodule "98_repos_sus/ginf_g1c_ayyar_advait"]
+	path = 98_repos_sus/ginf_g1c_ayyar_advait
+	url = git@github.com:Advait-Ayyar/ginf_g1c_ayyar_advait.git
+[submodule "98_repos_sus/ginf_G1c_brunner_jill"]
+	path = 98_repos_sus/ginf_G1c_brunner_jill
+	url = git@github.com:Jill-brunner/ginf_G1c_brunner_jill.git
+[submodule "98_repos_sus/ginf_g1c_chiesi_leiya"]
+	path = 98_repos_sus/ginf_g1c_chiesi_leiya
+	url = git@github.com:Leiya-Chiesi/ginf_g1c_chiesi_leiya.git
+[submodule "98_repos_sus/ginf_g1c_christen_lino"]
+	path = 98_repos_sus/ginf_g1c_christen_lino
+	url = git@github.com:lino-christen/ginf_g1c_christen_lino.git
+[submodule "98_repos_sus/ginf_g1c_horlacher_mia"]
+	path = 98_repos_sus/ginf_g1c_horlacher_mia
+	url = git@github.com:Mia-Horlacher/ginf_g1c_horlacher_mia.git
+[submodule "98_repos_sus/ginf_g1c_leutwyler_mia"]
+	path = 98_repos_sus/ginf_g1c_leutwyler_mia
+	url = git@github.com:Mia-Leutwyler/ginf_g1c_leutwyler_mia.git
+[submodule "98_repos_sus/ginf_g1c_niggemeier_chiara"]
+	path = 98_repos_sus/ginf_g1c_niggemeier_chiara
+	url = git@github.com:chiara-niggemeier/ginf_g1c_niggemeier_chiara.git
+[submodule "98_repos_sus/ginf_g1c_pham_vanessa"]
+	path = 98_repos_sus/ginf_g1c_pham_vanessa
+	url = git@github.com:vanessa-pham-09/ginf_g1c_pham_vanessa.git
+[submodule "98_repos_sus/ginf_g1c_rauber_felix"]
+	path = 98_repos_sus/ginf_g1c_rauber_felix
+	url = git@github.com:Felix-Rauber/ginf_g1c_rauber_felix.git
+[submodule "98_repos_sus/ginf_g1c_refardt_nele"]
+	path = 98_repos_sus/ginf_g1c_refardt_nele
+	url = git@github.com:Nele-Refardt/ginf_g1c_refardt_nele.git
+[submodule "98_repos_sus/ginf_g1c_schaffhauser_nico"]
+	path = 98_repos_sus/ginf_g1c_schaffhauser_nico
+	url = git@github.com:Nico-Schaffhauser/ginf_g1c_schaffhauser_nico.git
+[submodule "98_repos_sus/ginf_g1c_scharf_leo"]
+	path = 98_repos_sus/ginf_g1c_scharf_leo
+	url = git@github.com:Leo-Scharf/ginf_g1c_scharf_leo.git
+[submodule "98_repos_sus/ginf_g1c_schatzmann_yasmin"]
+	path = 98_repos_sus/ginf_g1c_schatzmann_yasmin
+	url = git@github.com:Yasmin-schatzmann/ginf_g1c_schatzmann_yasmin.git
+[submodule "98_repos_sus/ginf_g1c_schmid_mika"]
+	path = 98_repos_sus/ginf_g1c_schmid_mika
+	url = git@github.com:Mika-Schmid/ginf_g1c_schmid_mika.git
+[submodule "98_repos_sus/ginf_g1c_schraner_diego"]
+	path = 98_repos_sus/ginf_g1c_schraner_diego
+	url = git@github.com:Diego-Schraner/ginf_g1c_schraner_diego.git
+[submodule "98_repos_sus/ginf_g1c_schulz_isabelle"]
+	path = 98_repos_sus/ginf_g1c_schulz_isabelle
+	url = git@github.com:Isabelle-Schulz/ginf_g1c_schulz_isabelle.git
+[submodule "98_repos_sus/ginf_g1c_sunu_joel"]
+	path = 98_repos_sus/ginf_g1c_sunu_joel
+	url = git@github.com:Joel-Sunu/ginf_g1c_sunu_joel.git
+[submodule "98_repos_sus/ginf_g1c_szott_nikola"]
+	path = 98_repos_sus/ginf_g1c_szott_nikola
+	url = git@github.com:Nikola-Szott/ginf_g1c_szott_nikola.git
+[submodule "98_repos_sus/ginf_g1c_zimmermann_anja"]
+	path = 98_repos_sus/ginf_g1c_zimmermann_anja
+	url = git@github.com:Anja-Zimmermann/ginf_g1c_zimmermann_anja.git
+[submodule "98_repos_sus/ginf_g1c_cosp_elisenda"]
+	path = 98_repos_sus/ginf_g1c_cosp_elisenda
+	url = git@github.com:elisenda-cosp/ginf_g1c_cosp_elisenda.git
+[submodule "98_repos_sus/ginf_g1c_fierz_joline"]
+	path = 98_repos_sus/ginf_g1c_fierz_joline
+	url = git@github.com:joline-fierz/ginf_g1c_fierz_joline.git
+[submodule "98_repos_sus/ginf_g1c_fink_levi"]
+	path = 98_repos_sus/ginf_g1c_fink_levi
+	url = git@github.com:Levi-Fink/ginf_g1c_fink_levi.git
+[submodule "98_repos_sus/ginf_g1c_leuzinger_elina"]
+	path = 98_repos_sus/ginf_g1c_leuzinger_elina
+	url = git@github.com:Elina-Leuzinger/ginf_g1c_leuzinger_elina.git
+[submodule "98_repos_sus/ginf_g1c_moscoso_gabriel"]
+	path = 98_repos_sus/ginf_g1c_moscoso_gabriel
+	url = git@github.com:Gabriel-Moscoso/ginf_g1c_moscoso_gabriel.git
+[submodule "98_repos_sus/ginf_g1c_tschachtli_daniel"]
+	path = 98_repos_sus/ginf_g1c_tschachtli_daniel
+	url = git@github.com:Daniel-Tschachtli/ginf_g1c_tschachtli_daniel.git
