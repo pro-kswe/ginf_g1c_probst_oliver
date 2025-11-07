@@ -1,3 +1,4 @@
+
 ### GitHub-Bewertung 1 (27. Oktober 2025)
 
 Es gibt für diese Bewertung maximal **6 Punkte**.
