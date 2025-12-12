@@ -185,13 +185,21 @@ def check_structure(course_name):
         print("Keine Strukturinformationen gefunden.")
 
 
-def check_clean_code_rules(course_name):
-    student_names = collect_student_names(course_name)
+def check_clean_code_rules(course_name, is_bulk_mode_used=False, is_single_mode_used=False):
+    if is_single_mode_used:
+        answer = input("Name? ")
+        student_names = [answer]
+    else:
+        student_names = collect_student_names(course_name)
     for student_name in student_names:
-        print()
-        print()
+        if not is_bulk_mode_used:
+            print()
+            print()
         print(f"====== CHECKING CLEAN-CODE-REGELN von {student_name} ======")
-        answer = input("Überspringen? (Format Y/N oder leerlassen)? ")
+        if not is_bulk_mode_used:
+            answer = input("Überspringen? (Format Y/N oder leerlassen)? ")
+        else:
+            answer = "N"
         if answer != "Y":
             student_path = f"../98_repos_sus/{course_name}_{student_name}"
             try:
@@ -210,7 +218,8 @@ def check_clean_code_rules(course_name):
                         )
                     )
                     for student_python_file_name in student_python_file_names:
-                        print(f"=== {student_dir_name}: {student_python_file_name} ===")
+                        if not is_bulk_mode_used:
+                            print(f"=== {student_dir_name}: {student_python_file_name} ===")
                         with open(f"{student_path}/{student_dir_name}/{student_python_file_name}", "r",
                                   encoding="utf-8") as f:
                             file_content = f.read()
@@ -220,27 +229,81 @@ def check_clean_code_rules(course_name):
                             file_lines_with_new_lines = f.read().splitlines(keepends=True)
 
                         error_counter = 0
-                        print("LEERZEILE NACH IMPORT...")
+                        if not is_bulk_mode_used:
+                            print("LEERZEILE NACH IMPORT...")
                         error_counter += check_import_blank_line(file_lines, student_dir_name, student_python_file_name)
-                        print("LEERZEILE AM ENDE...")
+                        if not is_bulk_mode_used:
+                            print("LEERZEILE AM ENDE...")
                         error_counter += check_trailing_blank_line(file_lines_with_new_lines, student_dir_name,
                                                                    student_python_file_name)
-                        print("LEERZEICHEN NACH KOMMA BEI ARGUMENTEN...")
+                        if not is_bulk_mode_used:
+                            print("LEERZEICHEN NACH KOMMA BEI ARGUMENTEN...")
                         error_counter += check_space_after_comma_in_arguments(file_lines, student_dir_name,
                                                                               student_python_file_name)
-                        print()
+                        if not is_bulk_mode_used:
+                            print("LEERZEICHEN VOR UND NACH OPERATOREN...")
+                        error_counter += check_space_before_and_after_operators(file_lines, student_dir_name,
+                                                                                student_python_file_name)
+                        if not is_bulk_mode_used:
+                            print()
 
                         if error_counter > 0:
-                            print(f"Es gibt {error_counter} Fehler.")
-                            press_enter_to_continue()
-                            is_file_printed = input("Dateiinhalt anzeigen? Y/N oder leerlassen? ")
-                            if is_file_printed == "Y":
-                                print(file_content)
+                            if not is_bulk_mode_used:
+                                print(f"Es gibt {error_counter} Fehler.")
+                                press_enter_to_continue()
+                                is_file_printed = input("Dateiinhalt anzeigen? Y/N oder leerlassen? ")
+                                if is_file_printed == "Y":
+                                    print(file_content)
             except Exception as e:
                 print(f"[{student_name}]{e}")
                 press_enter_to_continue()
-            print()
-            print()
+            if not is_bulk_mode_used:
+                print()
+                print()
+
+
+def check_space_before_and_after_operators(file_lines, directory, file_name):
+    error_counter = 0
+    if not file_lines:
+        print(f"Leere Datei {file_name} kein Leerzeichen möglich.")
+        error_counter += 1
+    else:
+        # Findet Operatoren, die NICHT korrekt mit genau einem Leerzeichen davor und danach notiert sind
+        ops_symbols = r'\*\*|//|==|<=|>=|!=|[+\*/%<>=]'  # ohne '-', wird separat behandelt
+
+        no_space_before_or_after_operator_pattern = re.compile(rf'''(?x)
+
+            # --- Symbolische Operatoren außer '-' ---
+            (?:
+                (?<!\s)(?:{ops_symbols})     # kein Space davor
+              | (?:{ops_symbols})(?!\s)      # kein Space danach
+            )
+
+          |
+
+            # --- Binäres Minus '-' ---
+            (?:
+                # Fehlender Space davor
+                (?<!\s)-(?=\s|\S)
+                # ABER KEIN Match, wenn ein Vorzeichen vor einer Zahl:
+                (?!\d|\.\d)
+            )
+          |
+
+            # Fehlender Space danach
+            (?:
+                -(?!\s)
+                # wieder: nicht als Vorzeichen vor einer Zahl werten
+                (?!\d|\.\d)
+            )
+
+        ''')
+
+        for i, file_line in enumerate(file_lines, start=1):
+            if no_space_before_or_after_operator_pattern.search(file_line):
+                error_counter += 1
+                print(f"- {directory}/{file_name} in Zeile {i}: falscher Abstand vor oder nach Operator.")
+    return error_counter
 
 
 def check_space_after_comma_in_arguments(file_lines, directory, file_name):
@@ -267,7 +330,8 @@ def check_trailing_blank_line(file_lines_with_new_lines, directory, file_name):
     else:
         last_line = file_lines_with_new_lines[len(file_lines_with_new_lines) - 1]
         if last_line.rstrip() == "" and len(file_lines_with_new_lines) > 1:
-            last_line = file_lines_with_new_lines[len(file_lines_with_new_lines) - 2]
+            if last_line != "\n":
+                last_line = file_lines_with_new_lines[len(file_lines_with_new_lines) - 2]
         if last_line == "\n":
             print(f"- {directory}/{file_name} zu viele Leerzeilen am Ende.")
             error_counter += 1
@@ -294,21 +358,22 @@ def check_import_blank_line(file_lines, directory, file_name):
         error_counter += 1
     else:
         # Prüfen, was nach dem letzten Import kommt
-        if last_import_command_index + 1 >= len(file_lines):
-            print(f"- {directory}/{file_name} endet und hat keine Leerzeile.")
-            error_counter += 1
-
-        next_line = file_lines[last_import_command_index + 1]
-
-        if next_line.strip() == "":
-            # Prüfen, ob genau EINE Leerzeile folgt
-            if last_import_command_index + 2 < len(file_lines) and file_lines[
-                last_import_command_index + 2].strip() == "":
-                print(f"- MEHR als eine Leerzeile in {directory}/{file_name}.")
+        if len(file_lines) > 1:
+            if last_import_command_index + 1 >= len(file_lines):
+                print(f"- {directory}/{file_name} endet und hat keine Leerzeile.")
                 error_counter += 1
-        else:
-            print(f"- KEINE Leerzeile in {directory}/{file_name} nach import.")
-            error_counter += 1
+
+            next_line = file_lines[last_import_command_index + 1]
+
+            if next_line.strip() == "":
+                # Prüfen, ob genau EINE Leerzeile folgt
+                if last_import_command_index + 2 < len(file_lines) and file_lines[
+                    last_import_command_index + 2].strip() == "":
+                    print(f"- MEHR als eine Leerzeile in {directory}/{file_name} nach import.")
+                    error_counter += 1
+            else:
+                print(f"- KEINE Leerzeile in {directory}/{file_name} nach import.")
+                error_counter += 1
     return error_counter
 
 
@@ -320,8 +385,10 @@ while aktion != 9:
     print("1: CHECK GITHUB REPO VORHANDEN")
     print("2: KOPIERE MARKDOWN")
     print("3: CHECK STRUKTUR")
-    print("4: CHECK CLEAN-CODE-REGELN")
-    print("6: SCHULNETZ EXPORT VERARBEITEN")
+    print("4: CHECK CLEAN-CODE-REGELN (STEP-BY-STEP)")
+    print("5: CHECK CLEAN-CODE-REGELN (BULK)")
+    print("6: CHECK CLEAN-CODE-REGELN (SINGLE)")
+    print("7: SCHULNETZ EXPORT VERARBEITEN")
     print("9: EXIT")
     try:
         aktion = int(input("Aktion? "))
@@ -333,7 +400,11 @@ while aktion != 9:
             check_structure(course)
         elif aktion == 4:
             check_clean_code_rules(course)
+        elif aktion == 5:
+            check_clean_code_rules(course, is_bulk_mode_used=True)
         elif aktion == 6:
+            check_clean_code_rules(course, is_single_mode_used=True)
+        elif aktion == 7:
             preprocess_csv_export(course)
         elif aktion == 9:
             print("AUF WIEDERSEHEN.")
