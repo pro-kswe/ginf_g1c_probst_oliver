@@ -38,10 +38,23 @@ def create_student_abgaben_dirs(course_name, exam_number):
         press_enter_to_continue()
     else:
         student_names = collect_student_names(course_name)
-        for index in range(len(student_names)):
+        error_counter = 0
+        student_count = len(student_names)
+        for index in range(student_count):
             student_name = student_names[index]
-            student_path = f"{abgaben_path}/{index + 1}_{student_name}"
-            os.mkdir(student_path)
+            student_path = f"{abgaben_path}/{str(index + 1).zfill(2)}_{student_name}"
+            try:
+                os.mkdir(student_path)
+            except Exception as ex:
+                error_counter += 1
+                print(ex)
+        if student_count - error_counter != student_count:
+            print(f"ERROR: Es gab Fehler beim Erstellen...")
+            print(f"Anzahl Fehler: {error_counter}")
+            print(f"Anzahl SuS: {student_count}")
+            press_enter_to_continue()
+        else:
+            print("Alle erstellt")
 
 
 def create_task_file(course_name, exam_number, task_file_name):
